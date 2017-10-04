@@ -2,13 +2,13 @@
 
 <?php
 
-    $sql = "select count(*) from posts";
-    $result = mysqli_query($conn, $sql);
-    if (!$result) {
-        die("QUERY FAILED. ".mysqli_error($conn));
-    }
-    $pages = mysqli_fetch_field($result);
-    echo "$pages";
+    // $sql = "select count(*) from posts";
+    // $result = mysqli_query($conn, $sql);
+    // if (!$result) {
+    //     die("QUERY FAILED. ".mysqli_error($conn));
+    // }
+    // $pages = mysqli_fetch_field($result);
+    // echo "$pages";
 
 ?>
 
