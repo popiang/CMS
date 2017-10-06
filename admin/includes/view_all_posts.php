@@ -125,28 +125,28 @@
                     $post_date = $row['post_date'];
                     $post_views_count = $row['post_views_count'];
 
-                    echo "<tr class='clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>";
+                    echo "<tr>";
                     ?>
                           <td class="text-center"><input class="checkBoxes" type="checkbox" name="checkBoxArray[]" value="<?php echo $post_id; ?>"></td>
                     <?php
-                    echo "<td class='text-center'>{$post_id}</td>";
-                    echo "<td>{$post_author}</td>";
-                    echo "<td>{$post_title}</td>";
+                    echo "<td class='text-center clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_id}</td>";
+                    echo "<td class='clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_author}</td>";
+                    echo "<td class='clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_title}</td>";
 
                     $cat_query = "select * from categories where cat_id = '$post_category_id'";
                     $cat_result = mysqli_query($conn, $cat_query);
                     confirmQuery($cat_result, $conn);
                     while ($row = mysqli_fetch_assoc($cat_result)) {
-                        echo "<td>{$row['cat_title']}</td>";
+                        echo "<td class='clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$row['cat_title']}</td>";
                     }
 
-                    echo "<td class='text-center'>{$post_status}</td>";
-                    echo "<td class='text-center'><img width='50' src='../images/$post_image' alt='images'></td>";
-                    echo "<td>{$post_tags}</td>";
-                    echo "<td class='text-center'>{$post_comment_count}</td>";
-                    echo "<td class='text-center'>{$post_date}</td>";
-                    echo "<td class='text-center'><a href='posts.php?source=edit&id=$post_id'>Edit<a/></td>";
-                    echo "<td class='text-center'>{$post_views_count}</td>";
+                    echo "<td class='text-center clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_status}</td>";
+                    echo "<td class='text-center clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'><img width='50' src='../images/$post_image' alt='images'></td>";
+                    echo "<td class='clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_tags}</td>";
+                    echo "<td class='text-center clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_comment_count}</td>";
+                    echo "<td class='text-center clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_date}</td>";
+                    echo "<td class='text-center clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'><a href='posts.php?source=edit&id=$post_id'>Edit<a/></td>";
+                    echo "<td class='text-center clickable' style='cursor:pointer' data-href='../post.php?p_id=$post_id'>{$post_views_count}</td>";
                     echo "</tr>";
 
                 }
