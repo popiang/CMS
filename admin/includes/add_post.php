@@ -1,7 +1,15 @@
 <?php
+    //
+    //this page is to add post to db
+    //
+?>
 
+<?php
+
+    //checking if create_post button is pressed
     if (isset($_POST['create_post'])) {
 
+        //retrieving all the data from the form
         $postTitle = $_POST['title'];
         $postCategory = $_POST['post_category'];
         $postAuthor = $_POST['post_author'];
@@ -16,16 +24,22 @@
 
         move_uploaded_file($postImageTemp, "../images/$postImage");
 
+        //sql statement to insert data into db
         $sql = "insert into posts (post_category_id, post_title, post_author, post_date,
                 post_image, post_content, post_tags, post_status)
                 values ({$postCategory}, '{$postTitle}', '{$postAuthor}', '{$postDate}',
                 '{$postImage}', '{$postContent}', '{$postTags}', '{$postStatus}')";
 
+        //sql statement executed
         $result = mysqli_query($conn, $sql);
 
+        //checking if sql statement successful
         confirmQuery($result, $conn);
+
+        //retreive the id of the inserted data
         $added_post_id = mysqli_insert_id($conn);
 
+        //direct page to posts.php along with the id of the added post
         header("Location: posts.php?added_post_id={$added_post_id}");
 
     }
@@ -34,6 +48,7 @@
 
 <h3>Add New Post</h3>
 
+<!-- Add new post form -->
 <form action="" method="post" enctype="multipart/form-data">
 
     <div class="form-group">

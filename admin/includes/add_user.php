@@ -1,7 +1,15 @@
 <?php
+    //
+    //this page is to add user to db
+    //
+?>
 
+<?php
+
+    //check if add_user button is pressed
     if (isset($_POST['add_user'])) {
 
+        //retrieve all the data
         $username = $_POST['username'];
         $user_firstname = $_POST['user_firstname'];
         $user_lastname = $_POST['user_lastname'];
@@ -9,12 +17,18 @@
         $user_email = $_POST['user_email'];
         $user_role = $_POST['user_role'];
 
+        //sql statement to insert user data to table
         $sql = "insert into users (username, user_password, user_firstname, user_lastname,
                 user_email, user_role) values ('{$username}', '{$password}', '{$user_firstname}',
                  '{$user_lastname}', '{$user_email}', '{$user_role}')";
 
+        //sql statement executed
         $result = mysqli_query($conn, $sql);
+
+        //checking if sql statement successfull
         confirmQuery($result, $conn);
+
+        //direct page to users.php
         header("Location: users.php");
 
     }
@@ -23,6 +37,7 @@
 
 <h3>Add New User</h3>
 
+<!-- Add user form -->
 <form action="" method="post" enctype="multipart/form-data">
 
     <div class="form-group">

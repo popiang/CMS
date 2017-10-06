@@ -1,3 +1,11 @@
+<?php
+    //
+    //this page displays all the posts in the website
+    //might received value for 'source' _GET variable in url 
+    //
+?>
+
+
 <!-- Header -->
 <?php include "includes/admin_header.php" ?>
 
@@ -19,12 +27,14 @@
 
                         <?php
 
+                            //check for the source variable in the url
                             if (isset($_GET['source'])) {
                                 $source = $_GET['source'];
                             } else {
                                 $source = "";
                             }
 
+                            //choose action in the page base on source variable
                             switch ($source) {
                                 case 'addpost':
                                     include 'includes/add_post.php';
@@ -47,6 +57,7 @@
                         ?>
 
                     </div>
+
                 </div>
                 <!-- /.row -->
 

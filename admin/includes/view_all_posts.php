@@ -1,17 +1,30 @@
 <?php
+    //
+    //this page displays all the posts
+    //
+?>
 
+<?php
+
+    //check for _GET 'added_post_id' variable in url
     if (isset($_GET['added_post_id'])) {
         $added_post_id = $_GET['added_post_id'];
+
+        //display an alert stating 'Post Added!'
         echo "<p class='alert alert-success'>Post Added!   <a class='btn btn-success btn-xs'
              href='../post.php?p_id={$added_post_id}'>View Post</a> or <a class='btn btn-success btn-xs' href='posts.php?source=edit&id={$added_post_id}'>Edit Post</a></p>";
     }
 
+    //check for _GET 'edited_post_id' variable in url
     if (isset($_GET['edited_post_id'])) {
         $edited_post_id = $_GET['edited_post_id'];
+
+        //display an alert stating 'Post Updated!'
         echo "<p class='alert alert-success'>Post Updated!   <a class='btn btn-success btn-xs'
              href='../post.php?p_id={$edited_post_id}'>View Post</a> or <a class='btn btn-success btn-xs' href='posts.php?source=edit&id={$edited_post_id}'>Edit Post</a></p>";
     }
 
+    //check if submit button is pressed and checkbox in the form is checked
     if (isset($_POST['submit']) && isset($_POST['checkBoxArray'])) {
 
         $checkBoxArray = $_POST['checkBoxArray'];
@@ -20,19 +33,24 @@
 
             $bulk_options = $_POST['bulk_options'];
 
+            //choose action base on 'bulk_options' value
             switch ($bulk_options) {
+
+                //set checked posts status to published
                 case 'published':
                     $sql = "update posts set post_status = 'published' where post_id = $checkBoxId";
                     $result = mysqli_query($conn, $sql);
                     confirmQuery($result, $conn);
                     break;
 
+                //set checked posts status to draft
                 case 'draft':
                     $sql = "update posts set post_status = 'draft' where post_id = $checkBoxId";
                     $result = mysqli_query($conn, $sql);
                     confirmQuery($result, $conn);
                     break;
 
+                //delete checked posts base on id
                 case 'delete':
                     $sql = "delete from posts where post_id = $checkBoxId";
                     $result = mysqli_query($conn, $sql);
@@ -43,6 +61,7 @@
                     confirmQuery($result, $conn);
                     break;
 
+                //clone checked posts and add to db
                 case 'clone':
                     $sql = "select * from posts where post_id = $checkBoxId";
                     $result = mysqli_query($conn, $sql);
@@ -73,6 +92,7 @@
 
 ?>
 
+<!-- form for bulk_options -->
 <form action="" method="post">
     <div id="bulkOptionContainer" class="form-group col-xs-4">
         <select class="form-control" name="bulk_options" id="select-options">
@@ -89,7 +109,7 @@
     </div>
     <!-- <div class="table-responsive"> -->
 
-
+    <!-- Table for all the posts -->
     <table class="table table-hover table-bordered">
         <thead>
             <tr>
@@ -159,6 +179,7 @@
 
 <script type="text/javascript">
 
+    //check with user if really want to delete user
     function checkDelete() {
         var selected = document.getElementById('select-options').value;
         var confirmDelete = true;
@@ -169,6 +190,7 @@
         return confirmDelete;
     }
 
+    //link the row of the post table to post.php
     var elements = document.getElementsByClassName('clickable');
     for (var i = 0; i < elements.length; i++) {
         var element = elements[i];

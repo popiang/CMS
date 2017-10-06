@@ -1,9 +1,20 @@
-<?php include "../includes/dbh.php" ?>
-<?php include "includes/functions.php" ?>
-<?php session_start(); ?>
-<?php ob_start(); ?>
+<?php
+    //
+    //this is the header of this website
+    //
+?>
 
 <?php
+    //including configuration & functions to use in all pages
+    include "../includes/dbh.php";
+    include "includes/functions.php";
+    session_start();
+    ob_start();
+?>
+
+<?php
+    //checking if user is logged in and is an admin
+    //direct to index.php if not
     if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') {
         header("Location: ../index.php");
     }
@@ -31,15 +42,10 @@
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <!-- Using google charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+    <!-- Using tinymace textarea -->
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
     <script>tinymce.init({ selector:'textarea' });</script>
 

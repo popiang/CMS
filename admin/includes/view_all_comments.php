@@ -1,4 +1,10 @@
+<?php
+    //
+    //this page displays all the comments in a table
+    //
+?>
 
+<!-- All comments table -->
 <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -17,8 +23,13 @@
     <tbody>
 
         <?php
+            //sql query to retrieve all comments
             $sql = "select * from comments";
+
+            //execute the sql query
             $result = mysqli_query($conn, $sql);
+
+            //retrieve all comments and display it on a table row by row
             while ($row = mysqli_fetch_assoc($result)) {
 
                 $comment_id = $row['comment_id'];
@@ -36,13 +47,18 @@
                 echo "<td>{$comment_email}</td>";
                 echo "<td>{$comment_status}</td>";
 
+                //sql query to get post title of the associated comments
                 $sql_post = "select * from posts where post_id = $comment_post_id";
+
+                //execute above sql query
                 $sql_post_result = mysqli_query($conn, $sql_post);
 
+                //check if sql query insuccessfull
                 if(!$sql_post_result) {
                     die("QUERY FAILED. ".mysqli_error($conn));
                 }
 
+                //retrieve post title & post id for associated to the comment
                 while ($row = mysqli_fetch_assoc($sql_post_result)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
@@ -63,6 +79,7 @@
 
 <?php
 
+    //update comment_status to approved
     if (isset($_GET['approve'])) {
         $comment_id = $_GET['approve'];
         $sql = "update comments set comment_status = 'approved' where comment_id = $comment_id";
@@ -71,6 +88,7 @@
         header("Location: comments.php");
     }
 
+    //update comment_status to unapproved
     if (isset($_GET['unapprove'])) {
         $comment_id = $_GET['unapprove'];
         $sql = "update comments set comment_status = 'unapproved' where comment_id = $comment_id";
@@ -79,16 +97,18 @@
         header("Location: comments.php");
     }
 
+    //delete comment base on comment id
     if (isset($_GET['delete'])) {
         $comment_id = $_GET['delete'];
         $sql = "delete from comments where comment_id = $comment_id";
         $result = mysqli_query($conn, $sql);
         confirmQuery($result, $conn);
 
+        //decrement comment count for of the associated post
         $sql = "update posts set post_comment_count = post_comment_count - 1 where post_id = $comment_post_id";
         $result = mysqli_query($conn, $sql);
         confirmQuery($result, $conn);
-
+        
         header("Location: comments.php");
     }
 

@@ -1,5 +1,12 @@
 <?php
+    //
+    //this page is called by posts.php along with post id to edit
+    //
+?>
 
+<?php
+
+    //check if source=edit in url
     if (isset($_GET['source']) && $_GET['source'] == 'edit') {
 
         $idToEdit = $_GET['id'];
@@ -11,6 +18,7 @@
             die("Query failed. ".mysqli_error($conn));
         }
 
+        //retrieve all the data for the post
         while ($row = mysqli_fetch_assoc($result)) {
 
             $post_author = $row['post_author'];
@@ -26,8 +34,10 @@
         }
     }
 
+    //check if update_post button is pressed
     if (isset($_POST['update_post'])) {
 
+        //retrieve edited post data from the form
         $postTitle = $_POST['title'];
         $postCategory = $_POST['post_category_id'];
         $postAuthor = $_POST['post_author'];
@@ -51,13 +61,18 @@
 
         move_uploaded_file($postImageTemp, "../images/$postImage");
 
+        //sql statement to update post base on post id
         $sql = "update posts set post_category_id = '$postCategory', post_title = '$postTitle',
                post_author = '$postAuthor', post_status = '$postStatus', post_date = now(), post_image = '$postImage',
                post_content = '$postContent', post_tags = '$postTags', post_views_count = '$postViewsCount' where post_id = $idToEdit";
 
+        //sql statement is executed
         $result = mysqli_query($conn, $sql);
+
+        //check if executed sql statement is successful
         confirmQuery($result, $conn);
 
+        //direct back to post.php along with the edited post id
         header("Location: ./posts.php?edited_post_id=$idToEdit");
 
     }
@@ -66,6 +81,7 @@
 
 <h3>Edit Existing Post</h3>
 
+<!-- Edit post form -->
 <form action="" method="post" enctype="multipart/form-data">
 
     <div class="form-group">
@@ -136,6 +152,7 @@
 
 <script type="text/javascript">
 
+    //javascript function to reset to 0 the displayed post_views_count
     function resetViews() {
         document.getElementById('post_views_count_display').innerHTML = '0';
         document.getElementById('post_views_count').value = '0';

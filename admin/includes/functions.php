@@ -1,11 +1,20 @@
 <?php
+    //
+    //this page contains a lot of functions called by many part of the website
+    //
+?>
 
+
+<?php
+
+//this function is to check if a sql statement is executed successfully
 function confirmQuery($result, $conn) {
     if (!$result) {
         die("Query Failed. ".mysqli_error($conn));
     }
 }
 
+//this function add new category into the db
 function addCategory($conn) {
 
     if (isset($_POST['submit'])) {
@@ -22,6 +31,7 @@ function addCategory($conn) {
     }
 }
 
+//this function displays all the categories
 function displayCategories($conn) {
 
     $sql = "select * from categories";
@@ -39,6 +49,7 @@ function displayCategories($conn) {
     }
 }
 
+//this function delete category base on category id
 function deleteCategory($conn) {
 
     if (isset($_GET['delete'])) {
@@ -49,6 +60,8 @@ function deleteCategory($conn) {
     }
 }
 
+//this function checks for _GET 'edit' variable in the url or if submit-update buttonis pressed
+//then include the edit_category.php page
 function editCategory() {
     global $conn;
     if (isset($_GET['edit']) || isset($_POST['submit-update'])) {

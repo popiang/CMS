@@ -1,11 +1,20 @@
 <?php
+    //
+    //this page is called by users.php to edit user base on user id
+    //
+?>
 
+<?php
+
+    //check for _GET 'source' variable in url
     if(isset($_GET['source']) == 'edituser') {
 
         $user_id = $_GET['user_id'];
         $sql = "select * from users where user_id = $user_id";
         $result = mysqli_query($conn, $sql);
         confirmQuery($result, $conn);
+
+        //retrieve user data to display on edit form
         while ($row = mysqli_fetch_assoc($result)) {
 
             $username = $row['username'];
@@ -15,10 +24,14 @@
             $user_role = $row['user_role'];
 
         }
+    } else {
+        header("Location: users.php");
     }
 
+    //check if edit_user button is pressed
     if (isset($_POST['edit_user'])) {
 
+        //retrieve all edited user data from the form
         $user_id = $_GET['user_id'];
         $username = $_POST['username'];
         $user_password = $_POST['user_password'];
@@ -28,21 +41,21 @@
         $user_email = $_POST['user_email'];
         $user_role = $_POST['user_role'];
 
-        $sql = "select randSalt from users where user_id = '$user_id'";
-        $result = mysqli_query($conn, $sql);
-        confirmQuery($result, $conn);
-        $row = mysqli_fetch_array($result);
-        $randSalt = $row['randSalt'];
-
+        $randSalt = "\$2y\$10\$iusesomecrazystrings22";
         $user_password = crypt($user_password, $randSalt);
 
+        //sql statement to update user data base on user id
         $sql = "update users set username = '{$username}', user_password = '{$user_password}',
                 user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}',
                 user_email = '{$user_email}', user_role = '{$user_role}' where user_id = $user_id";
 
+        //execute the sql statement
         $result = mysqli_query($conn, $sql);
+
+        //check if the executed sql statement is successfull
         confirmQuery($result, $sql);
 
+        //direct page to users.php
         header("Location: users.php");
 
     }
@@ -51,6 +64,7 @@
 
 <h3>Edit User</h3>
 
+<!-- Edit user form -->
 <form action="" method="post" enctype="multipart/form-data">
 
     <div class="form-group">

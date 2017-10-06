@@ -1,5 +1,15 @@
 <?php
+    //
+    //below code is called by editCategory() function in functions.php into categories.php
+    //else part is executed first, then if part is executed when submit-update button is pressed
+    //
+?>
 
+
+<?php
+
+    //check if submit-update button from edit category form is pressed
+    //update category base on category id
     if (isset($_POST['submit-update']))
     {
         $cat_id = $_POST['cat-id'];
@@ -13,6 +23,7 @@
     }
     else
     {
+        //display edit category form and display existing category base on  category id
         $cat_id_to_edit = $_GET['edit'];
         $sql = "select * from categories where cat_id = '$cat_id_to_edit'";
         $result = mysqli_query($conn, $sql);

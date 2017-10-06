@@ -10,17 +10,6 @@
 
         if(!empty($username) && !empty($email) && !empty($password)) {
 
-            // $sql = "select randSalt from users";
-            // $result = mysqli_query($conn, $sql);
-            //
-            // if (!$result) {
-            //     die("QUERY FAILED. ".mysqli_error($conn));
-            // }
-            //
-            // while ($row = mysqli_fetch_assoc($result)) {
-            //     $randSalt = $row['randSalt'];
-            // }
-
             $randSalt = "\$2y\$10\$iusesomecrazystrings22";
 
             $password = crypt($password, $randSalt);

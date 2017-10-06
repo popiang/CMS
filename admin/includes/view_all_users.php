@@ -1,4 +1,10 @@
+<?php
+    //
+    //this page display all the users in the db
+    //
+?>
 
+<!-- All users table -->
 <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -13,8 +19,16 @@
     <tbody>
 
         <?php
+            //sql query to retrieve all users
             $sql = "select * from users";
+
+            //execute above sql query
             $result = mysqli_query($conn, $sql);
+
+            //check if sql query successfull
+            confirmQuery($result, $conn);
+
+            //retrieve user data and display it in users table
             while ($row = mysqli_fetch_assoc($result)) {
 
                 $user_id = $row['user_id'];
@@ -47,6 +61,7 @@
 
 <?php
 
+    //update user_role to admin
     if (isset($_GET['toadmin'])) {
         $user_id = $_GET['toadmin'];
         $sql = "update users set user_role = 'admin' where user_id = $user_id";
@@ -55,6 +70,7 @@
         header("Location: users.php");
     }
 
+    //update user_role to subscriber
     if (isset($_GET['tosubscriber'])) {
         $user_id = $_GET['tosubscriber'];
         $sql = "update users set user_role = 'subscriber' where user_id = $user_id";
@@ -63,6 +79,7 @@
         header("Location: users.php");
     }
 
+    //delete user base onid
     if (isset($_GET['delete'])) {
         $user_id = $_GET['delete'];
         $sql = "delete from users where user_id = $user_id";
