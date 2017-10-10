@@ -1,3 +1,9 @@
+<?php
+    //
+    //this page displays all the users in the db
+    //
+?>
+
 <!-- Header -->
 <?php include "includes/admin_header.php" ?>
 
@@ -10,6 +16,7 @@
 
                 <!-- Page Heading -->
                 <div class="row">
+                    
                     <div class="col-lg-12">
 
                         <h1 class="page-header">
@@ -18,13 +25,14 @@
                         </h1>
 
                         <?php
-
+                            //checking for _GET 'source' variable
                             if (isset($_GET['source'])) {
                                 $source = $_GET['source'];
                             } else {
                                 $source = "";
                             }
 
+                            //choose action base on the value of 'source' variable
                             switch ($source) {
                                 case 'adduser':
                                     include 'includes/add_user.php';
@@ -47,6 +55,7 @@
                         ?>
 
                     </div>
+
                 </div>
                 <!-- /.row -->
 

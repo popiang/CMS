@@ -1,3 +1,10 @@
+<?php
+    //
+    //this page is the index page for admin section of the website
+    //it displays information graphical information of users, posts, comments & categories
+    //
+?>
+
 <!-- Header -->
 <?php include "includes/admin_header.php" ?>
 
@@ -14,16 +21,17 @@
                         <h1 class="page-header">
                             Welcome To Admin Page
                             <?php
-                                $username = $_SESSION['username'];
+                                $username = $_SESSION['username'];//retrieving the logged in username
                             ?>
-                            <small><?php echo $username; ?></small>
+                            <small><?php echo $username; ?><!-- displaying the username -->
                         </h1>
                     </div>
                 </div>
 
                 <!-- /.row -->
-
                 <div class="row">
+
+                    <!-- Display number of posts in db -->
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -33,16 +41,19 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <?php
+                                            //below codes get the number of posts in db
                                             $sql = "select * from posts where post_status = 'published'";
                                             $result = mysqli_query($conn, $sql);
                                             confirmQuery($result, $conn);
                                             $posts_count = mysqli_num_rows($result);
                                         ?>
+                                        <!-- display the number of posts in db -->
                                         <div class='huge'><?php echo $posts_count; ?></div>
                                         <div>Posts</div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Link to posts.php -->
                             <a href="posts.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
@@ -52,6 +63,8 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- Display number of comments in db -->
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-green">
                             <div class="panel-heading">
@@ -61,16 +74,19 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <?php
+                                            //below codes get the number of comments in db
                                             $sql = "select * from comments where comment_status = 'approved'";
                                             $result = mysqli_query($conn, $sql);
                                             confirmQuery($result, $conn);
                                             $comments_count = mysqli_num_rows($result);
                                         ?>
+                                        <!-- display the number of comments in db -->
                                         <div class='huge'><?php echo $comments_count; ?></div>
                                         <div>Comments</div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Link to comments.php -->
                             <a href="comments.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
@@ -80,6 +96,8 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- Display number of users with user_role as admin in db -->
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-yellow">
                             <div class="panel-heading">
@@ -89,16 +107,19 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <?php
+                                            //below codes get the number of admin users in db
                                             $sql = "select * from users where user_role = 'admin'";
                                             $result = mysqli_query($conn, $sql);
                                             confirmQuery($result, $conn);
                                             $users_count = mysqli_num_rows($result);
                                         ?>
+                                        <!-- display the number of admin users in db -->
                                         <div class='huge'><?php echo $users_count; ?></div>
                                         <div> Users</div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Link to users.php -->
                             <a href="users.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
@@ -108,6 +129,8 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- Display number of categories with in db -->
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
@@ -117,16 +140,19 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <?php
+                                            //below codes get the number of category in db
                                             $sql = "select * from categories";
                                             $result = mysqli_query($conn, $sql);
                                             confirmQuery($result, $conn);
                                             $categories_count = mysqli_num_rows($result);
                                         ?>
+                                        <!-- display the number of category in db -->
                                         <div class='huge'><?php echo $categories_count; ?></div>
                                         <div>Categories</div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Link to categories.php -->
                             <a href="categories.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
@@ -139,20 +165,22 @@
                 </div>
 
                 <!-- /.row -->
-
                 <div class="row">
 
                     <?php
+                        //getting the number of posts with 'draft' status
                         $sql = "select * from posts where post_status = 'draft'";
                         $result = mysqli_query($conn, $sql);
                         confirmQuery($result, $conn);
                         $post_draft_count = mysqli_num_rows($result);
 
+                        //getting the number of unapproved comments
                         $sql = "select * from comments where comment_status = 'unapproved'";
                         $result = mysqli_query($conn, $sql);
                         confirmQuery($result, $conn);
                         $comments_unapproved_count = mysqli_num_rows($result);
 
+                        //getting the number of users with 'subscriber' role
                         $sql = "select * from users where user_role = 'subscriber'";
                         $result = mysqli_query($conn, $sql);
                         confirmQuery($result, $conn);
@@ -160,6 +188,10 @@
                     ?>
 
                     <script type="text/javascript">
+
+                    //
+                    //Below codes generates a chart using google chart api
+                    //
 
                     google.charts.load('current', {'packages':['bar']});
                     google.charts.setOnLoadCallback(drawChart);
@@ -180,7 +212,6 @@
 
                             ?>
 
-                            // ['Posts', 1000],
                             ]);
 
                         var options = {

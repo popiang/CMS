@@ -1,3 +1,11 @@
+<?php
+    //
+    //this page displays all categories id db admin_header
+    //also the form to add new category
+    //
+?>
+
+
 <!-- Header -->
 <?php include "includes/admin_header.php" ?>
 
@@ -19,10 +27,13 @@
 
                         <div class="col-xs-6">
 
+                            <?php //call addCategory() function from functions.php to display add category form ?>
                             <?php addCategory($conn); ?>
 
+                            <?php //call deleteCategory() function from functions.php to delete category ?>
                             <?php deleteCategory($conn); ?>
 
+                            <!-- Add category form -->
                             <form action="categories.php" method="post">
                                 <div class="form-group">
                                     <label for="cat-title">Add Category</label>
@@ -33,10 +44,12 @@
                                 </div>
                             </form>
 
+                            <?php //call editCategory() function from functions.php to edit existing category ?>
                             <?php editCategory($conn); ?>
 
                         </div>
 
+                        <!-- Table displaying all categories available in db -->
                         <div class="col-xs-6">
                             <table class="table table-bordered table-hover">
                                 <thead>
@@ -45,6 +58,7 @@
                                 </thead>
                                 <tbody>
 
+                                    <?php //call displayCategories() function from functions.php to display all categories ?>
                                     <?php displayCategories($conn); ?>
 
                                 </tbody>

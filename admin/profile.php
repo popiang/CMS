@@ -1,11 +1,19 @@
+<?php
+    //
+    //this page displays the profile of the user in a form, ready to be edited if user wants to
+    //
+?>
+
 <!-- Header -->
 <?php include "includes/admin_header.php" ?>
 <?php
 
+    //check if _SESSION variable exists
     if (isset($_SESSION['username'])) {
 
         $username = $_SESSION['username'];
 
+        //below codes retrieve user's data and populate in respective variables
         $sql = "select * from users where username = '$username'";
         $result = mysqli_query($conn, $sql);
         confirmQuery($result, $conn);
@@ -20,10 +28,15 @@
             $user_role = $row['user_role'];
 
         }
+    } else {
+        //redirect to index.php upon unauthorized access
+        header("Location: index.php");
     }
 
+    //check if update_profile button is pressed
     if (isset($_POST['update_profile'])) {
 
+        //retrieve all the data from the edit-user form
         $username = $_POST['username'];
         $user_password = $_POST['user_password'];
         $user_rpassword = $_POST['retype_password'];
@@ -32,13 +45,18 @@
         $user_email = $_POST['user_email'];
         $user_role = $_POST['user_role'];
 
+        //sql statement to update user data in db
         $sql = "update users set username = '{$username}', user_password = '{$user_password}',
                 user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}',
                 user_email = '{$user_email}', user_role = '{$user_role}' where user_id = $user_id";
 
+        //sql statement is executed
         $result = mysqli_query($conn, $sql);
+
+        //check if executed sql statement is successfull
         confirmQuery($result, $sql);
 
+        //direct to index.php
         header("Location: index.php");
 
     }
@@ -61,6 +79,7 @@
                             <small>Subheading</small>
                         </h1>
 
+                        <!-- Edit profile form -->
                         <form action="" method="post" enctype="multipart/form-data">
 
                             <div class="form-group">

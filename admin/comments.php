@@ -1,3 +1,9 @@
+<?php
+    //
+    //this page displays all comments in the db
+    //
+?>
+
 <!-- Header -->
 <?php include "includes/admin_header.php" ?>
 
@@ -18,19 +24,14 @@
                         </h1>
 
                         <?php
-
+                            //checking for _GET 'source' variable
                             if (isset($_GET['source'])) {
                                 $source = $_GET['source'];
                             } else {
                                 $source = "";
                             }
 
-                            switch ($source) {
-                                default:
-                                    include 'includes/view_all_comments.php';
-                                    break;
-                            }
-
+                            include 'includes/view_all_comments.php';
                         ?>
 
                     </div>
