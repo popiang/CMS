@@ -1,17 +1,5 @@
 <?php include "includes/header.php" ?>
 
-<?php
-
-    // $sql = "select count(*) from posts";
-    // $result = mysqli_query($conn, $sql);
-    // if (!$result) {
-    //     die("QUERY FAILED. ".mysqli_error($conn));
-    // }
-    // $pages = mysqli_fetch_field($result);
-    // echo "$pages";
-
-?>
-
     <!-- Navigation -->
     <?php include "includes/navigation.php" ?>
 
@@ -23,6 +11,11 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
+                <h1 class="page-header">
+                    Page Heading
+                    <small>Secondary Text</small>
+                </h1>
+
                 <?php
                     $sql = "select * from posts where post_status = 'published'";
                     $result = mysqli_query($conn, $sql);
@@ -32,7 +25,12 @@
                         echo "<h2>Sorry, no posts available</h2>";
                     } else {
 
-                        $sql = "select * from posts";
+                        $post_count_query = "select * from posts";
+                        $result = mysqli_query($conn, $post_count_query);
+                        $post_count = mysqli_num_rows($result);
+                        $post_count_to_display = ceil($post_count / 10);
+
+                        $sql = "select * from posts limit 5, 10";
                         $result = mysqli_query($conn, $sql);
                         while ($row = mysqli_fetch_assoc($result)) {
                             $post_id = $row['post_id'];
@@ -47,11 +45,6 @@
 
                                 ?>
 
-                                <h1 class="page-header">
-                                    Page Heading
-                                    <small>Secondary Text</small>
-                                </h1>
-
                                 <!-- Blog Post -->
                                 <h2>
                                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
@@ -62,9 +55,9 @@
                                 <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
                                 <hr>
                                 <a href="post.php?p_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image ?>" alt=""></a>
-                                <hr>
                                 <p><?php echo $post_content; ?></p>
                                 <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                                <hr><br>
 
                     <?php
                             }
@@ -81,6 +74,16 @@
         <!-- /.row -->
 
         <hr>
+
+        <ul class="pager">
+            <?php
+                if ($post_count_to_display > 1) {
+                    for ($i = 1; $i <= $post_count_to_display ; $i++) {
+                        echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                    }
+                }
+            ?>
+        </ul>
 
 <!-- Footer -->
 <?php include "includes/footer.php" ?>
