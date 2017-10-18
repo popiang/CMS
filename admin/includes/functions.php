@@ -7,6 +7,28 @@
 
 <?php
 
+function usersOnline($conn) {
+
+    $session = session_id();
+    $time = time();
+    $time_out_in_seconds = 30;
+    $time_out = $time - $time_out_in_seconds;
+
+    $sql = "select * from users_online where session = '$session'";
+    $result = mysqli_query($conn, $sql);
+    $count = mysqli_num_rows($result);
+
+    if($count == null) {
+        mysqli_query($conn, "insert into users_online (session, time) values ('$session', '$time')");
+    } else {
+        mysqli_query($conn, "update users_online set time = '$time' where session = '$session'");
+    }
+
+    $result = mysqli_query($conn, "select * from users_online where time > '$time_out'");
+    return $users_online_count = mysqli_num_rows($result);
+
+}
+
 //this function is to check if a sql statement is executed successfully
 function confirmQuery($result, $conn) {
     if (!$result) {
