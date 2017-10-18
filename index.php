@@ -25,12 +25,19 @@
                         echo "<h2>Sorry, no posts available</h2>";
                     } else {
 
+                        if (isset($_GET['page'])) {
+                            $page = $_GET['page'];
+                        } else {
+                            $page = 1;
+                        }
+
                         $post_count_query = "select * from posts";
                         $result = mysqli_query($conn, $post_count_query);
                         $post_count = mysqli_num_rows($result);
                         $post_count_to_display = ceil($post_count / 10);
 
-                        $sql = "select * from posts limit 5, 10";
+                        $post_limit = ($page * 10 - 10);
+                        $sql = "select * from posts limit $post_limit, 10";
                         $result = mysqli_query($conn, $sql);
                         while ($row = mysqli_fetch_assoc($result)) {
                             $post_id = $row['post_id'];
@@ -73,13 +80,16 @@
         </div>
         <!-- /.row -->
 
-        <hr>
-
         <ul class="pager">
             <?php
                 if ($post_count_to_display > 1) {
+                    echo "<hr>";
                     for ($i = 1; $i <= $post_count_to_display ; $i++) {
-                        echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                        if ($i == $page) {
+                            echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                        } else {
+                            echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                        }
                     }
                 }
             ?>
