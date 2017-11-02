@@ -10,9 +10,11 @@
 
         if(!empty($username) && !empty($email) && !empty($password)) {
 
-            $randSalt = "\$2y\$10\$iusesomecrazystrings22";
+            // $randSalt = "\$2y\$10\$iusesomecrazystrings22";
+            //
+            // $password = crypt($password, $randSalt);
 
-            $password = crypt($password, $randSalt);
+            $password = password_hash($password, PASSWORD_BCRYPT, array('cost'=>12));
 
             $sql = "insert into users (username, user_email, user_password, user_role) values ('$username', '$email', '$password', 'subscriber')";
             $result = mysqli_query($conn, $sql);
