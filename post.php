@@ -94,8 +94,8 @@
                         die("QUERY FAILED. ".mysqli_error($conn));
                     }
 
-                    $sql = "update posts set post_comment_count = post_comment_count + 1 where post_id = $post_id";
-                    $result = mysqli_query($conn, $sql);
+                    // $sql = "update posts set post_comment_count = post_comment_count + 1 where post_id = $post_id";
+                    // $result = mysqli_query($conn, $sql);
 
                     if (!$result) {
                         die("QUERY FAILED. ".mysqli_error($conn));

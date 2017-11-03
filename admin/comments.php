@@ -24,14 +24,23 @@
                         </h1>
 
                         <?php
-                            //checking for _GET 'source' variable
-                            if (isset($_GET['source'])) {
-                                $source = $_GET['source'];
+
+                            //checking for _GET 'p_id' variable
+                            if (!isset($_GET['p_id'])) {
+
+                                //display all comments
+                                include 'includes/view_all_comments.php';
+
                             } else {
-                                $source = "";
+
+                                //get the post_id
+                                $post_id = $_GET['p_id'];
+
+                                //display comments for the post_id
+                                include 'includes/view_post_comments.php';
+
                             }
 
-                            include 'includes/view_all_comments.php';
                         ?>
 
                     </div>
