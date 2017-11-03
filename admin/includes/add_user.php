@@ -17,6 +17,8 @@
         $user_email = $_POST['user_email'];
         $user_role = $_POST['user_role'];
 
+        $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 10));
+
         //sql statement to insert user data to table
         $sql = "insert into users (username, user_password, user_firstname, user_lastname,
                 user_email, user_role) values ('{$username}', '{$password}', '{$user_firstname}',

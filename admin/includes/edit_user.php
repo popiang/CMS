@@ -24,6 +24,7 @@
             $user_role = $row['user_role'];
 
         }
+
     } else {
         header("Location: users.php");
     }
@@ -41,19 +42,25 @@
         $user_email = $_POST['user_email'];
         $user_role = $_POST['user_role'];
 
-        $randSalt = "\$2y\$10\$iusesomecrazystrings22";
-        $user_password = crypt($user_password, $randSalt);
+        if(!empty($user_password)) {
+
+            $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost'=> 10));
+            $sql = "update users set user_password = '{$user_password}' where user_id = '{$user_id}'";
+            $result = mysqli_query($conn, $sql);
+            confirmQuery($result, $conn);
+
+        }
+
 
         //sql statement to update user data base on user id
-        $sql = "update users set username = '{$username}', user_password = '{$user_password}',
-                user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}',
+        $sql = "update users set username = '{$username}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}',
                 user_email = '{$user_email}', user_role = '{$user_role}' where user_id = $user_id";
 
         //execute the sql statement
         $result = mysqli_query($conn, $sql);
 
         //check if the executed sql statement is successfull
-        confirmQuery($result, $sql);
+        confirmQuery($result, $conn);
 
         //direct page to users.php
         header("Location: users.php");
