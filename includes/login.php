@@ -4,8 +4,8 @@ include "dbh.php";
 
 if(isset($_POST['submit-login'])) {
 
-    $username = escape($conn, $_POST['username']);
-    $password = escape($conn, $_POST['password']);
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     $sql = "select * from users where username = '$username'";
     $result = mysqli_query($conn, $sql);
