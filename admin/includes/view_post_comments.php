@@ -69,7 +69,7 @@
                 echo "<td>{$comment_date}</td>";
                 echo "<td><a href='comments.php?approve=$comment_id'>Approve<a/></td>";
                 echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove<a/></td>";
-                echo "<td><a onClick=\"javascript: return confirm('Are you sure want to delete the comment?');\" href='comments.php?delete=$comment_id'>Delete<a/></td>";
+                echo "<td><a onClick=\"javascript: return confirm('Are you sure want to delete the comment?');\" href='comments.php?delete=$comment_id&p_id=$post_id'>Delete<a/></td>";
                 echo "</tr>";
 
             }
@@ -110,7 +110,7 @@
         $result = mysqli_query($conn, $sql);
         confirmQuery($result, $conn);
 
-        header("Location: comments.php");
+        header("Location: comments.php?p_id=$post_id");
     }
 
 ?>
