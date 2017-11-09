@@ -67,8 +67,8 @@
                 }
 
                 echo "<td>{$comment_date}</td>";
-                echo "<td><a href='comments.php?approve=$comment_id'>Approve<a/></td>";
-                echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove<a/></td>";
+                echo "<td><a href='comments.php?approve=$comment_id&p_id=$post_id'>Approve<a/></td>";
+                echo "<td><a href='comments.php?unapprove=$comment_id&p_id=$post_id'>Unapprove<a/></td>";
                 echo "<td><a onClick=\"javascript: return confirm('Are you sure want to delete the comment?');\" href='comments.php?delete=$comment_id&p_id=$post_id'>Delete<a/></td>";
                 echo "</tr>";
 
@@ -86,7 +86,7 @@
         $sql = "update comments set comment_status = 'approved' where comment_id = $comment_id";
         $result = mysqli_query($conn, $sql);
         confirmQuery($result, $conn);
-        header("Location: comments.php");
+        header("Location: comments.php?p_id=$post_id");
     }
 
     //update comment_status to unapproved
@@ -95,7 +95,7 @@
         $sql = "update comments set comment_status = 'unapproved' where comment_id = $comment_id";
         $result = mysqli_query($conn, $sql);
         confirmQuery($result, $conn);
-        header("Location: comments.php");
+        header("Location: comments.php?p_id=$post_id");
     }
 
     //delete comment base on comment id
