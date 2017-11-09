@@ -40,7 +40,7 @@
         //retrieve edited post data from the form
         $postTitle = escape($_POST['title']);
         $postCategory = escape($_POST['post_category_id']);
-        $postAuthor = escape($_POST['post_author']);
+        $postAuthor = $_SESSION['user_firstname'];
         $postStatus = $_POST['post_status'];
 
         $postImage = $_FILES['image']['name'];
@@ -106,11 +106,6 @@
             ?>
 
         </select>
-    </div>
-
-    <div class="form-group">
-        <label for="post_author">Post Author</label>
-        <input class="form-control" type="text" name="post_author" value="<?php echo $post_author ?>">
     </div>
 
     <div class="form-group">
