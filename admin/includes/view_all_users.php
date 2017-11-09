@@ -4,6 +4,15 @@
     //
 ?>
 
+<?php
+    //checking if user is logged in and is an admin
+    //direct to index.php if not
+    // if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') {
+    //     header("Location: ../index.php");
+    //     exit();
+    // }
+?>
+
 <!-- All users table -->
 <table class="table table-hover table-striped">
     <thead>
