@@ -4,8 +4,8 @@ include "dbh.php";
 
 if(isset($_POST['submit-login'])) {
 
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $username = escape($conn, $_POST['username']);
+    $password = escape($conn, $_POST['password']);
 
     $sql = "select * from users where username = '$username'";
     $result = mysqli_query($conn, $sql);
@@ -13,7 +13,6 @@ if(isset($_POST['submit-login'])) {
     if(!$result) {
         die("QUERY FAILED. ".mysqli_error($conn));
     }
-
 
     while ($row = mysqli_fetch_assoc($result)) {
 
@@ -26,13 +25,6 @@ if(isset($_POST['submit-login'])) {
         $db_randSalt = $row['randSalt'];
 
     }
-
-    // $password = crypt($password, $db_randSalt);
-    //
-    // if (($username != $db_username) && ($password != $db_user_password)) {
-    //     header("Location: ../index.php");
-
-    // if (($username == $db_username) && ($password == $db_user_password)) {
 
     if (password_verify($password, $db_user_password)) {
 

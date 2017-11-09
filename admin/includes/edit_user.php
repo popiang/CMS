@@ -34,12 +34,12 @@
 
         //retrieve all edited user data from the form
         $user_id = $_GET['user_id'];
-        $username = $_POST['username'];
-        $user_password = $_POST['user_password'];
-        $user_rpassword = $_POST['retype_password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
+        $username = escape($_POST['username']);
+        $user_password = escape($_POST['user_password']);
+        $user_rpassword = escape($_POST['retype_password']);
+        $user_firstname = escape($_POST['user_firstname']);
+        $user_lastname = escape($_POST['user_lastname']);
+        $user_email = escape($_POST['user_email']);
         $user_role = $_POST['user_role'];
 
         if(!empty($user_password)) {
@@ -50,7 +50,6 @@
             confirmQuery($result, $conn);
 
         }
-
 
         //sql statement to update user data base on user id
         $sql = "update users set username = '{$username}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}',

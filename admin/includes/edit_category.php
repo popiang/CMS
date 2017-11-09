@@ -13,7 +13,7 @@
     if (isset($_POST['submit-update']))
     {
         $cat_id = $_POST['cat-id'];
-        $new_cat_title = $_POST['cat-title'];
+        $new_cat_title = escape($_POST['cat-title']);
         $sql = "update categories set cat_title = '$new_cat_title' where cat_id = '$cat_id'";
         $result = mysqli_query($conn, $sql);
         if (!$result)

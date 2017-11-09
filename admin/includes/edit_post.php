@@ -38,16 +38,16 @@
     if (isset($_POST['update_post'])) {
 
         //retrieve edited post data from the form
-        $postTitle = $_POST['title'];
-        $postCategory = $_POST['post_category_id'];
-        $postAuthor = $_POST['post_author'];
+        $postTitle = escape($_POST['title']);
+        $postCategory = escape($_POST['post_category_id']);
+        $postAuthor = escape($_POST['post_author']);
         $postStatus = $_POST['post_status'];
 
         $postImage = $_FILES['image']['name'];
         $postImageTemp = $_FILES['image']['tmp_name'];
 
-        $postTags = $_POST['post_tags'];
-        $postContent = mysqli_real_escape_string($conn, $_POST['post_content']);
+        $postTags = escape($_POST['post_tags']);
+        $postContent = escape($conn, $_POST['post_content']);
         $postViewsCount = $_POST['post_views_count'];
 
         if (empty($postImage)) {

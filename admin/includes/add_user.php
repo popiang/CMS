@@ -10,12 +10,12 @@
     if (isset($_POST['add_user'])) {
 
         //retrieve all the data
-        $username = $_POST['username'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $password = $_POST['user_password'];
-        $user_email = $_POST['user_email'];
-        $user_role = $_POST['user_role'];
+        $username = escape($_POST['username']);
+        $user_firstname = escape($_POST['user_firstname']);
+        $user_lastname = escape($_POST['user_lastname']);
+        $password = escape($_POST['user_password']);
+        $user_email = escape($_POST['user_email']);
+        $user_role = escape($_POST['user_role']);
 
         $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 10));
 
