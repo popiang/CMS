@@ -12,7 +12,7 @@
         //retrieving all the data from the form
         $postTitle = escape($_POST['title']);
         $postCategory = escape($_POST['post_category']);
-        $postAuthor = escape($_POST['post_author']);
+        $postAuthor = $_SESSION['user_firstname'];
         $postStatus = escape($_POST['post_status']);
 
         $postImage = $_FILES['image']['name'];
@@ -69,11 +69,6 @@
             ?>
 
         </select>
-    </div>
-
-    <div class="form-group">
-        <label for="post_author">Post Author</label>
-        <input class="form-control" type="text" name="post_author">
     </div>
 
     <div class="form-group">
